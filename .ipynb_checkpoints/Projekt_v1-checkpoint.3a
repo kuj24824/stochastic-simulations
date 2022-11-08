@@ -2,19 +2,10 @@
  "cells": [
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 1,
    "id": "6182a94a",
    "metadata": {},
-   "outputs": [
-    {
-     "ename": "SyntaxError",
-     "evalue": "invalid syntax (623143997.py, line 139)",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[1;36m  Input \u001b[1;32mIn [2]\u001b[1;36m\u001b[0m\n\u001b[1;33m    if len(par_subspaces) == 1\u001b[0m\n\u001b[1;37m                              ^\u001b[0m\n\u001b[1;31mSyntaxError\u001b[0m\u001b[1;31m:\u001b[0m invalid syntax\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
     "import math\n",
     "import numpy as np\n",
@@ -151,17 +142,7 @@
     "    \n",
     "    return plane   \n",
     "    \n",
-    "def subspacing(par_a,par_subspaces):\n",
-    "    \n",
-    "    ret_subareas = np.zeros(np.append(par_subspaces,4))\n",
-    "    if len(par_subspaces) == 1:\n",
-    "        for i in range(par_subspaces[0]):\n",
-    "            \n",
-    "    else:\n",
-    "        for i in range(par_subspaces[0]):\n",
-    "            ret_subareas[i] = subspacing(par_a,par_subspaces[0:])\n",
-    "    [r_min, r_max, z_min, z_max] = par_a\n",
-    "    return ret_subareas\n",
+    "\n",
     "    \n",
     "def func_i(par_samples,par_a,par_i):\n",
     "    '''\n",
@@ -255,8 +236,24 @@
     "    return abs(ret_area)\n",
     "\n",
     "\n",
+    "def area_spacing (par_a, par_subspace):\n",
+    "    [r_min, r_max, z_min, z_max] = par_a\n",
+    "    loc_dim = np.append(par_subspace,4)\n",
+    "    ret_spaces = numpy.empty(loc_dim)\n",
+    "    \n",
+    "    if ret_spaces.ndim >1:\n",
+    "         \n",
+    "    \n",
+    "    for r in range(len(r_axis)):\n",
+    "        for z in range(len(z_axis)):\n",
+    "            c = [r_axis[r], z_axis[z]]\n",
+    "            \n",
+    "            result = mandel_i(c, par_i)\n",
+    "            plane[r, z] = result\n",
+    "    \n",
     "\n",
-    "def func_s_log_ortho(par_a,par_i,par_s,par_i_range=False,par_s_range=False):\n",
+    "\n",
+    "def func_s_log_ortho(par_a,par_i,par_s,par_i_range=False,par_s_range=False,subspaces = [4,4]:\n",
     "    '''\n",
     "    pure random sampling\n",
     "    Define function considering the improvement after j steps\n",
@@ -277,7 +274,7 @@
     "        \n",
     "        \n",
     "    if par_s_range == True:\n",
-    "        start_s = 1\n",
+    "        start_s = 2\n",
     "    else:\n",
     "        start_s = par_s\n",
     "    \n",
@@ -289,7 +286,13 @@
     "        #######\n",
     "        #create sample array(start)\n",
     "        ######\n",
-    "        loc_samples = subspacing(par_a,[4,4])\n",
+    "        for loc_sub_s in range(sample_size):\n",
+    "            \n",
+    "            loc_r = (par_a[1]-par_a[0]) * np.random.rand() + par_a[0]\n",
+    "            loc_z = (par_a[3]-par_a[2]) * np.random.rand() + par_a[2]\n",
+    "            \n",
+    "            loc_samples[loc_sub_s] = [loc_r,loc_z]\n",
+    "        \n",
     "        #######\n",
     "        #create sample array(end)\n",
     "        ######\n",
@@ -682,7 +685,25 @@
     {
      "data": {
       "text/plain": [
-       "[4, 4, 4]"
+       "array([[[0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.]],\n",
+       "\n",
+       "       [[0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.]],\n",
+       "\n",
+       "       [[0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.]],\n",
+       "\n",
+       "       [[0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.],\n",
+       "        [0., 0., 0., 0.]]])"
       ]
      },
      "execution_count": 4,
@@ -691,13 +712,35 @@
     }
    ],
    "source": [
-    "[4,4,4,4][1:]"
+    "np.zeros([4,4,4])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "9a91fd09",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([4, 4, 4, 4])"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "test = [4,4,4]\n",
+    "np.append(test,4)\n"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "9a91fd09",
+   "id": "7417ada6",
    "metadata": {},
    "outputs": [],
    "source": []
