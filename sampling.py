@@ -28,7 +28,7 @@ class sampler:
         Generates par_s sampling points using the self.method sampling technique.
     """
 
-    def __init__(self, par_a, method=None):
+    def __init__(self, par_a, method = None):
         """
         Initializes an object of the class sampler.
 
@@ -68,7 +68,7 @@ class sampler:
             scaled x- and y-coordinate
         """
         dist_x = self.x_max - self.x_min
-        dist_y = self.y_max - self.y_max
+        dist_y = self.y_max - self.y_min
 
         # Scale the variables to the sampling area
         x = (dist_x * par_x) + self.x_min
