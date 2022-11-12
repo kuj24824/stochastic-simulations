@@ -26,6 +26,11 @@ class sampler:
     -------
     generate_samples(par_s)
         Generates par_s sampling points using the self.method sampling technique.
+    
+    >>> test = sampler([-2, 2, -1, 2])
+    >>> x, y = test.scale_coordinate(0.4, 0.6)
+    >>> np.allclose((x, y), (-0.4, 0.8))
+    True
     """
 
     def __init__(self, par_a, method = None):
@@ -244,3 +249,7 @@ class sampler:
             samples = self.orthogonal(par_s)
 
         return samples
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
