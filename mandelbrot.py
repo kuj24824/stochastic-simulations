@@ -28,6 +28,20 @@ class mandel:
     -------
     est_area(par_s, par_i, method=None)
         Estimates the Mandelbrot area given par_s sampling points and par_i iterations.
+
+    >>> test = mandel([-2, 2, -1, 1])
+    >>> test.area == 8
+    True
+
+    >>> np.allclose(test.step([0,0.1], [0.0, 0.1]), [-0.01, 0.1])
+    True
+
+    >>> test.condition([0, 1])
+    0
+    >>> test.condition([1, 1])
+    0
+    >>> test.condition([4, 3])
+    1
     """
 
     def __init__(self, par_a):
@@ -224,3 +238,8 @@ class mandel:
                 plane[x, y] = self.check_point(c, par_i)
 
         return plane
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
