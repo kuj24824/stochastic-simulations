@@ -151,7 +151,7 @@ class sampler:
         samples = np.empty(par_s)
 
         # Generate one sample point per interval 1/s
-        for s in range(s):
+        for s in range(par_s):
             samples[s] = (s + np.random.uniform()) / par_s
 
         return samples
