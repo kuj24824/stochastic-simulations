@@ -1,7 +1,6 @@
 """Sampler class that generates specific amount of sampling points in an area using various sampling methods."""
 
 # Imports
-import math
 import numpy as np
 
 
@@ -183,24 +182,11 @@ class sampler:
 
         # Combine the x and y coordinate to form a sampling point
         for s in range(par_s):
-            index_x = 0
-            index_y = 0
-
-            # Sampling points are not allowed to be on the same row or column
-            if math.trunc(y[index_y] * par_s) == math.trunc(x[index_x] * par_s):
-                # Generate a random index to swap the y-coordinate
-                index_y = int((len(y) - 1) * np.random.uniform())
-                if index_y == 0:
-                    index_y += 1
 
             # Scale the coordinate to the sampling area
-            x_coord, y_coord = self.scale_coordinate(x[index_x], y[index_y])
+            x_coord, y_coord = self.scale_coordinate(x[s], y[s])
             samples[s, 0] = x_coord
             samples[s, 1] = y_coord
-
-            # Delete the used coordinates, so they can't be used in the swap
-            x = np.delete(x, index_x)
-            y = np.delete(y, index_y)
 
         return samples
 
