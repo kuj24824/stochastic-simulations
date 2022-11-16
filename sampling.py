@@ -1,7 +1,6 @@
 """Sampler class that generates specific amount of sampling points in an area using various sampling methods."""
 
 # Imports
-import math
 import numpy as np
 
 
@@ -183,24 +182,11 @@ class sampler:
 
         # Combine the x and y coordinate to form a sampling point
         for s in range(par_s):
-            index_x = 0
-            index_y = 0
-
-            # Sampling points are not allowed to be on the same row or column
-            if math.trunc(y[index_y] * par_s) == math.trunc(x[index_x] * par_s):
-                # Generate a random index to swap the y-coordinate
-                index_y = int((len(y) - 1) * np.random.uniform())
-                if index_y == 0:
-                    index_y += 1
 
             # Scale the coordinate to the sampling area
-            x_coord, y_coord = self.scale_coordinate(x[index_x], y[index_y])
+            x_coord, y_coord = self.scale_coordinate(x[s], y[s])
             samples[s, 0] = x_coord
             samples[s, 1] = y_coord
-
-            # Delete the used coordinates, so they can't be used in the swap
-            x = np.delete(x, index_x)
-            y = np.delete(y, index_y)
 
         return samples
 
@@ -211,20 +197,42 @@ class sampler:
         Parameters
         ----------
         par_s : int
-            number of sampling points
+            number of sampling points, should have an integer sqrt
 
         Returns
         -------
         samples : numpy.ndarray
             array with x- and y-coordinate of the par_s sampling points
         """
+        if np.sqrt(par_s) != int(np.sqrt(par_s)):
+            raise ValueError("Number of sampling points should have an integer square root.")
+
         # Array to store the sample points
         samples = np.empty((par_s, 2))
 
-        """
-        Orthogonal sampling code
-        """
+        # Start with sample points that form a latin hypercube
+        x = self.latin_hypercube_1d(par_s)
+        y = self.latin_hypercube_1d(par_s)
 
+        # Split the sample points in subareas
+        x_new = []
+        y_new = []
+        for i in range(int(np.sqrt(par_s))):
+            # Select the points in the ith subarea
+            x_i = np.copy(x[int(i * np.sqrt(par_s)): int(i * np.sqrt(par_s) + np.sqrt(par_s))])
+            y_i = np.copy(y[int(i * np.sqrt(par_s)): int(i * np.sqrt(par_s) + np.sqrt(par_s))])
+
+            # Create a random permutation within the subarea
+            x_new.append(self.random_permutation(x_i))
+            y_new.append(self.random_permutation(y_i))
+        
+        # Combine one x-coordinate from every subarea with one y-coordinate from every subarea
+        for i in range(int(np.sqrt(par_s))):
+            for j in range(int(np.sqrt(par_s))):
+                x_coord, y_coord = self.scale_coordinate(x_new[i][j], y_new[j][i])
+                samples[int(i * np.sqrt(par_s)) + j, 0] = x_coord
+                samples[int(i * np.sqrt(par_s)) + j, 1] = y_coord
+                
         return samples
 
     def generate_samples(self, par_s):
