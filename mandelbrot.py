@@ -184,7 +184,44 @@ class mandel:
                 inside += 1
 
         # Estimated area is the fraction of sampling points in the set multiplied with the total area
-        return (inside/par_s) * self.area
+        return (inside/par_s) * self.area, samples
+    
+    def avg_est_area(self, runs, par_s, par_i, method=None):
+        """
+        Estimates the Mandelbrot area given par_s sampling points and par_i iterations for a number of runs.
+
+        Parameters
+        ----------
+        runs : int
+            number of simulations to run
+        par_s : int
+            number of sampling points
+        par_i : int
+            maximum number of iterations of the sequence
+        method : str, optional
+            sampling method (default in uniform)
+
+        Returns
+        -------
+        average_area : float
+            average estimated area of the Mandelbrot set
+        sample_var : float
+            the sample variance over the runs
+        """
+        # Calculate the average area over all the different runs
+        area = []
+        for _ in range(runs):
+            calc = self.est_area(par_s, par_i, method)
+            area.append(calc[0])
+        average_area = np.sum(area) / runs
+
+        # Calculate the sample variance
+        sample_var = 0
+        for i in range(runs):
+            sample_var += (area[i] - average_area)**2
+        sample_var /= (runs - 1)
+
+        return average_area, sample_var
 
     def grid(self, spacing):
         """
