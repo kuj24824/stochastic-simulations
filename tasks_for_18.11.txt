@@ -1,0 +1,21 @@
+what we have:
+-for ortogonal sampling and latin hypercube as well as the strategic sampling method
+	variance plot
+	accuracy plot
+
+-theory
+	monte carlo method
+	prediction of mandelbrot area
+	othogonal / latin hypercube sampling 
+	accuracy vs precision
+
+
+what we still need
+
+
+-for the strategic sampling:
+	hypothesis testing
+
+
+run code for orthogonal sampling vs strategic sampling
+show improved runtime and improved precision with equal accuracy
