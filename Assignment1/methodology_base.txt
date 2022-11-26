@@ -1,0 +1,12 @@
+
+
+Methodology used in improving the conversion rate for the area estimation of the mandelbrot set.
+
+The basic idea was to concentrate more on the areas where we are not sure whether they are part of the set or not.
+For this purpose we devised a subspacing algorithm, taking into account the first 2**n samples and determining 
+if the subspace contains only samples that are in the set or out only samples that are out of the set.
+In that case future samples will less likely be taken out of that area. this is supposed to increase 
+precision of the result.
+Also if the area only contains points in the mandelbrot set, future samples in that area will go through fewer 
+iterations to confirm whether they are in the set or not, to further increase the accuracy as well.
+The resulting subareas will be added to the total area by their relative size.

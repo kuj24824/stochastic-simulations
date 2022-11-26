@@ -1,0 +1,15 @@
+Task: Mandelbrot set
+
+Develop a methode to improve the convergence rate of the monte carlo approach.
+
+
+
+definately: 
+-run 20 times with new seeds for hypothesis testing
+
+
+assume the area to be known(1.506484(+- 0.000004 with 95%)(A Statistical Investigation of the Area of the Mandelbrot Set(Mitchell-2001)))
+"self adapting gradient descent" approach 
+estimate the gain(precision and accuracy) by increasing one size, either samples or iterations with the requirement being that
+the "true value"(compare mitchel) should lie in the 95 percentile of the experiment.
+ 
