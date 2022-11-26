@@ -1,12 +1,259 @@
+%-------------------------------------------------------------------------------
+% LATEX TEMPLATE ARTIKEL
+%-------------------------------------------------------------------------------
+% Dit template is voor gebruik door studenten van de de bacheloropleiding 
+% Informatica van de Universiteit van Amsterdam.
+% Voor informatie over schrijfvaardigheden, zie 
+%                               https://practicumav.nl/schrijven/index.html
+%
+%-------------------------------------------------------------------------------
+%	PACKAGES EN DOCUMENT CONFIGURATIE
+%-------------------------------------------------------------------------------
+
+\documentclass{uva-inf-article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage[style=authoryear-comp]{biblatex}
+\addbibresource{references.bib}
+
+%-------------------------------------------------------------------------------
+%	GEGEVENS VOOR IN DE TITEL, HEADER EN FOOTER
+%-------------------------------------------------------------------------------
+
+% Geef je artikel een logische titel die de inhoud dekt.
+\title{Assignment 1: Estimating the area of the Mandelbrot set using Monte Carlo integration}
+
+% Vul de naam van de opdracht in zoals gegeven door de docent en het type 
+% opdracht, bijvoorbeeld 'technisch rapport' of 'essay'.
+%\assignment{Naam van de opdracht}
+%\assignmenttype{Type opdracht}
+
+% Vul de volledige namen van alle auteurs in en de corresponderende UvAnetID's.
+\authors{Auteur 1; Aaron De Clercq}
+\uvanetids{UvAnetID student 1; UvAnetID 14483610}
+
+% Vul de naam van je tutor, begeleider (mentor), of docent / vakcoördinator in.
+% Vermeld in ieder geval de naam van diegene die het artikel nakijkt!
+\tutor{}
+\mentor{}
+\docent{Gábor Závodszky}
+
+% Vul hier de naam van je tutorgroep, werkgroep, of practicumgroep in.
+%\group{Naam van de groep}
+
+% Vul de naam van de cursus in en de cursuscode, te vinden op o.a. DataNose.
+\course{Stochastic simulations}
+\courseid{}
+
+% Dit is de datum die op het document komt te staan. Standaard is dat vandaag.
+\date{\today}
+
+%-------------------------------------------------------------------------------
+%	VOORPAGINA 
+%-------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+
+\justifying
+
+%-------------------------------------------------------------------------------
+%	INHOUDSOPGAVE EN ABSTRACT
+%-------------------------------------------------------------------------------
 
 
-Methodology used in improving the conversion rate for the area estimation of the mandelbrot set.
+%TC:ignore
+%\tableofcontents
+%\begin{abstract}
+%\end{abstract}
+%TC:endignore
 
-The basic idea was to concentrate more on the areas where we are not sure whether they are part of the set or not.
-For this purpose we devised a subspacing algorithm, taking into account the first 2**n samples and determining 
-if the subspace contains only samples that are in the set or out only samples that are out of the set.
-In that case future samples will less likely be taken out of that area. this is supposed to increase 
-precision of the result.
-Also if the area only contains points in the mandelbrot set, future samples in that area will go through fewer 
-iterations to confirm whether they are in the set or not, to further increase the accuracy as well.
-The resulting subareas will be added to the total area by their relative size.
+%-------------------------------------------------------------------------------
+%	INHOUD
+%-------------------------------------------------------------------------------
+% Hanteer bij benadering IMRAD: Introduction, Method, Results, Discussion.
+
+\section{Introduction}
+
+The Monte Carlo method is generally considered any approach that leads to a solution to a population-based problem by using a random sequence of numbers to represent a sample of the total population \parencite{halton1970}. It is a widely used method in the study of stochastic processes, like the behaviour of neutron chain reactions in fission devices \parencite{eckhardt1987} or the determination of efficiencies in gamma-ray detectors \parencite{raeside1976}.
+The Monte Carlo method can also serve as a numerical integration technique to solve problems that are not necessarily stochastic. 
+Compared to deterministic numerical integrators, such as the trapezoidal rule, the Monte Carlo integration method has a convergence rate independent of the dimensionality of the problem, indicating that it is a better technique for high-dimensional problems \parencite{james1980}.
+
+Since the Monte Carlo integration method uses a random number generator, it is a non-deterministic method. Therefore, determining the quality as an estimator of the solution must be done statistically by looking at the variance.
+Adding more sample points would reduce the variance and yield a better estimator, but this also increases the computational cost \parencite{james1980}.
+Other techniques to reduce the variance, for example, stratified sampling and importance sampling, have been developed \parencite{james1980, kroese2012}.
+
+To study the Monte Carlo integration method and the different variance reduction techniques in more detail, we will use them to estimate the area of the Mandelbrot set. The Mandelbrot set is the set of values in the complex plane for which the sequence,
+
+\begin{equation}
+    z_{n + 1} = z_n^2 + c
+    \label{eq:mandelbrot}
+\end{equation}
+
+with $z_0$ equal to zero, remains bounded \parencite{ewing1992}.
+Until now, there is no analytical expression to calculate the area of the Mandelbrot set, so the exact value of the area remains unknown \parencite{bittner2017}.
+However, because the fraction of samples inside the Mandelbrot set is related to the area of the Mandelbrot set relative to the total sampling area, we can use the Monte Carlo integration technique to estimate the area.
+
+In this process, there are two main approximations. The first one is the number of iterations for which we check if the sequence is bounded. For a value to be in the Mandelbrot set, equation \ref{eq:mandelbrot} should be bounded for every n, but we can only check this for a finite sequence. The second approximation is the number of sample points for which we check if the sequence is bounded. A particularly interesting question is how the estimate of the area changes if we vary the number of iterations or the number of sampling points.
+
+Additionally, we can look at the effect of using stratified sampling techniques on the convergence rate. With Latin hypercube sampling \parencite{wei1996} and orthogonal sampling, the idea is to subdivide the total sampling area into subareas to get a more homogeneous sampling strategy. As these are known ways to reduce the variance, we can assume that the estimate of the area of the Mandelbrot set would improve compared to pure random sampling.
+
+In the final part, we will test if a combination of stratified and importance sampling can further improve the convergence rate.
+
+\section{Theory}
+
+\textbf{Mandelbrot set}\\
+The Mandelbrot set is defined by a simple equation in which the resulting value is inserted into the equation again.
+$f(z) = z^2 + c$
+with z, c $\in \Im$
+For some values in $\Im$ the absolute value of the series $(z_{i+1} = f(z_i))$ diverges towards infinity and for other it does not.(source)
+It is known however, that for all numbers with $\|z\|>2$ this value diverges.
+for $\|c\|<2$
+$let \|z_i\|=2 +\eps => \|z_i^2\|=\|z_i\|^2 = (2+\eps)^2 =4 +2\eps+\eps^2 =>$ 
+$\|z_{i+1}\| = \|z^2 + c\|> \|z^2\| - \|c\|> (4-2) +2\eps+\eps^2 $ 
+Therefore the rate at which the value increases is at least constant and the series diverges.
+For a similar reason we find values of $\|c\|>2$ to be unimportant.
+This can be used to create a criterion to stop a recursive function determining the divergence with a given 
+starting point.
+In 2001 Kerry Mitchel analysed the area of the Mandelbrot set and found it to be at around 1.506484, with a  95\% confidence interval of 4.35 $10^{-6}$.\\
+https://www2.pd.infn.it/~lacaprar/Didattica/C++/Complex/Area%20of%20the%20Mandelbrot%20Set.pdf
+\\
+
+\\
+\textbf{Monte Carlo Method}\\
+The name Monte Carlo Method originated supposedly from Nikolai Metropolis\parencite{Please Change 2022} [*source: https://library.lanl.gov/cgi-bin/getfile?00326886.pdf],
+referring to the Monte Carlo Casinos in which everything was dependent on chance.
+In computational simulations this method refers to a (pseudo)-random experiment being performed several times
+to extract data out of models to find answers to posted questions.
+In this specific instance the Monte Carlo method is used to pick random samples in a predefined area 
+to determine if they are in the Monte Carlo set.
+That way we can estimate the area of the Mandelbrot set by multiplying the searched area by the probability of 
+a sample in the area being inside the Mandelbrot set.
+Based on the amount of samples used in the experiment we also get a confidence interval for how confident we are,
+the true value will lie in a specified interval around the calculated value.
+\\
+
+\\
+\textbf{Accuracy vs Precision}\\
+For this specific Experiment there are two main variables of interest to determine the true area of the Mandelbrot set.
+1. To determine weather a specific value diverges or converges , we have to run a number of iterations of equation 1. It is unfeasible to test for infinite iterations if a sample is in the set or not. Therefore we set a limit to the amount of iterations. This however will impact the accuracy of the result since we allow more values to be considered in the Mandelbrot set than there are. The resulting area will be bigger than expected.
+2. We expect the variance of the calculated area to go down with increasing amount of samples used for calculation of the area. The Variance of the result in repeated experiments is defined as 
+$1/{(n-1)} \sum_{i=1}^{n}(x_i - \mu)^2  with  \mu = 1/n \sum_{i=1}^{n}(x_i) $
+with $x_i$ being the estimated area with a fixed amount of samples and n the number of experiments used to calculate the variance. If we observe a lower variance for the same amount of samples with our devised method, we can declare it to converge faster.
+\\
+
+\\
+\textbf{Statistical tests}\\
+To compare both the precision and the accuracy we need to apply two different test, the F test for equality of variances and the Welch's t-test for equality of mean. In the F-Test the $F = \frac{S_x^2}{S_y^2}$
+with $S_y^2,S_x^2$ being the Variances of the two sample groups to compare has a so called F-distribution under the Null-hypothesis.In our experiment the Null-Hypothesis 
+describes the case that the two sample groups have the same variance, and all differences in the variance are up to randomness effects.
+In this report we want to proof that our devised method converges faster than the average Monte Carlo method for estimating the Mandelbrot are.
+so we want to show that the variance of our method is significantly smaller than the variance of the compared method by $\frac{S_{Monte-Carlo}^2}{S_{Strategic-sampling}^2} >2.63$ \parencite{Please Change 2022} 
+[source:https://opentextbc.ca/introductorybusinessstatistics/chapter/f-test-and-one-way-anova-2/]
+This means that the likelihood of those two sample groups having the same variance is smaller than $1\%$(Fischer Constant/ significance level of 1\%) with a degree of freedom of n-1 = 99 in both sample groups.
+To perform the Welch's T-test instead. This is a version of the Students T-test in which the assumption that the two sample groups have a
+similar variance is dropped. We get the critical value that needs to be surpassed to reject the null hypothesis by\\ 
+$T_f^{-1}(\frac{p+1}{2})$, with\\ 
+$f = \frac{\frac{S_x^2}{n}+\frac{S_y^2}{n}}^2}{\frac{S_x^4}{n^2(n-1)}+\frac{S_y^4}{n^2(n-1)}}^2}$ \\
+and the corresponding value obtained by the two samples to be\\ 
+$\|\frac{\overline{X}-\overline{Y}}{\sqrt{\frac{S_x^2}{n}+\frac{S_y^2}{n}}}\|$.
+\\
+
+\\
+\textbf{Latin hypercube/ Orthogonal sampling}\\
+To improve on the sampling method to have a lower chance of samples only being generated in one area,
+a Latin hypercube sampling method or orthogonal sampling method can be used.
+With Latin hypercube sampling(LHS) the sample space is divided into n subareas with n being the amount of samples. In that area 
+a random value is taken and joined with another random value from a second subarea. This is repeated for the amount of dimensions 
+in the sampling area.
+Each area and each subarea of that may only contain one sample. In two dimensions this is similar to only sampling once in a row and a column.
+In Orthogonal sampling, the amount of samples is instead equally distributed in another group of subareas superimposing the first dimensions.
+Each of those Subareas contains equal amounts of samples.
+\\
+
+\\
+\textbf{Strategic sampling}\\
+The main idea in Strategic sampling is to divide the area into smaller subareas which themselves contain a number of subareas. 
+These boxed subareas are paired with a specific probability to contain samples. After the results of the samples are confirmed, 
+the probability of the subareas is changed to focus on the more relevant areas, therefore omitting less relevant sample calculations.
+In the case of the Mandelbrot set area, the important subareas are those, containing both values inside and outside of the set.
+If all of the values of the subarea are either inside or outside the Mandelbrot set, that area will contain fewer samples in the future compared to other subareas.
+that way we get a better resolution of the true Mandelbrot area with fewer overall samples.
+This is supposed to improve precision and reduce the standard deviation of the result.
+
+
+
+
+
+\section{Methodology}
+
+We used strategic sampling of the area $\Im \supset \{[-2,2] +[-2i,2i]\}$(see Mandelbrot set in theory part for reason) to calculate the area of the Mandelbrot set and compared the results to 
+the standard Monte Carlo Method in the same area.
+The basic idea was to focus more on the areas where it cannot a priory be inferred whether the samples 
+will belong to the Mandelbrot set or not.
+For this purpose we devised a sub-spacing algorithm, taking into account the first $128 * (2^k)$ 
+samples, with k being the iterator for that specific cycle, and determining if a specific subspace contains only samples that are in the set or out only 
+samples that are out of the set. The area was divided into $16*(4^(k/2))$(with k/2 being rounded down) sub-spaces with a corresponding value for sample probability and test-iterations in the subarea.
+In that case future samples will less likely be taken out of that area. This is supposed to increase 
+precision of the result in the areas where there are both samples in the Mandelbrot set and outside.
+Also if the area only contains points in the Mandelbrot set, future samples in that area will 
+go through fewer iterations to confirm whether they are in the set or not, supposedly decreasing the 
+computational effort put into these areas. In relevant subareas the test-iterations were 
+set to $400*k$. 
+The resulting subareas will be added to the total area by their relative size. 
+\\
+We ran 100 experiments for both the normal Monte Carlo method and the strategic sampling method, with 
+6 cycles each. Resulting in the following configurations across the 6 Cycles.
+\\
+
+\begin{tabular}{t | 1 | 2 | 3 | 4 | 5 | 6}
+\textbf{Cycles }&1&2 &3 &4&5&6\\
+\hline
+\textbf{Samples per Cycle}&256&512&1024&2048&4096&8192\\
+\textbf{Test-Iterations(up to)}&400&800&1200&1600&2000&2400\\
+\textbf{Subdivisions(Monte Carlo)}&1&1&1&1&1&1\\
+\textbf{Subdivisions(strategic sampling)}&16&64&64&256&256&1048\\
+\end{tabular}\\
+
+After running the 100 Experiments with these parameters, we get an array of resulting area estimations.
+The Statistical tests mentioned in the Theory part were performed on these data points, resulting in 
+Hypothesis tests to infer whether we could reliably tell if the two methods show different or improved convergence rates in both accuracy and precision.
+
+
+\section{Results and discussion}
+
+
+\includegraphics[scale=0.5]{compared_mean.png}
+\includegraphics[scale=0.5]{welch_t_test.png}
+\includegraphics[scale=0.5]{logvariance_diff.png}
+\includegraphics[scale=0.5]{one_sided_f_test.png}
+\includegraphics[scale=0.25]{samplxe_cycle_1.png}
+\includegraphics[scale=0.25]{samplxe_cycle_2.png}
+\includegraphics[scale=0.25]{samplxe_cycle_3.png}
+\includegraphics[scale=0.25]{samplxe_cycle_4.png}
+\includegraphics[scale=0.25]{samplxe_cycle_5.png}
+\includegraphics[scale=0.25]{samplxe_cycle_6.png}
+\section{Conclusions}
+
+%-------------------------------------------------------------------------------
+%	REFERENTIES
+%-------------------------------------------------------------------------------
+\clearpage
+\printbibliography
+
+%-------------------------------------------------------------------------------
+%	BIJLAGEN 
+%-------------------------------------------------------------------------------
+
+%TC:ignore
+%\appendix 
+%\section{Bijlage {\LaTeX} code}
+%Bijgevoegd zijn de \textattachfile{main.tex}{code} en 
+%\textattachfile{references.bib}{bibliografie}.
+%TC:endignore
+
+%-------------------------------------------------------------------------------
+\end{document}
