@@ -2360,8 +2360,11 @@
     <bcf:citekey order="7" intorder="1">ewing1992</bcf:citekey>
     <bcf:citekey order="8" intorder="1">bittner2017</bcf:citekey>
     <bcf:citekey order="9" intorder="1">wei1996</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">mitchell2001</bcf:citekey>
-    <bcf:citekey order="11" intorder="1">mitchell2001</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">Kendall1953</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">Kendall1953</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">Chatfield1980</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">mitchell2001</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">mitchell2001</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">

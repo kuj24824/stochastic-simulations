@@ -106,21 +106,18 @@ In the final part, we will test if a combination of stratified and importance sa
 
 \section{Theory}
     
-    FIFO\\
-    First in First Out scheduling refers to a method in computational sciences in which a queueing 
-    process is used to store a number of tasks which are then performed in order of arrival 
-    at that queue. The assumption being that there is a specific order for the tasks to arrive at
+    \subsection{queuing schedules}
+    Queue scheduling refers to a method in computational sciences in which a queuing 
+    process is used to store a number of tasks. First in First Out-scheduling performs these tasks in order of arrival at that queue. With First in Last out scheduling the newest Task in the queue is chosen instead.\\
+    Both take into account the assumption being that there is a specific order for the tasks to arrive at
     the queue.\\
     
-    https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-24/issue-3/Stochastic-Processes-Occurring-in-the-Theory-of-Queues-and-their/10.1214/aoms/1177728975.full\\
-
-
-    Kendalls Notation\\
-    Kendalls Notation as used in the 1953 Paper of Kendall consist of 3 entries in the form of X/Y/n.
+    \subsection{Kendall's Notation}
+    Kendall's Notation as used in the 1953 Paper of Kendall\parencite{Kendall1953} consist of 3 entries in the form of X/Y/n.
     X denotes the distribution of input signals/ arrivals of tasks in the queue, Y the distribution of 
-    server-worktime or the amount of time necessary to perform a task and n being the amount of servernodes 
+    server-work time or the amount of time necessary to perform a task and n being the amount of server nodes 
     taking on tasks.
-    Kendall noted several distributions in their paper-
+    Kendall noted several distributions in their paper\parencite{Kendall1953} .
     For the following A(u) is probability of a given task arriving after a given time u.\\
     D;Deterministic:
 \begin{equation}\label{eq:determ}
@@ -139,64 +136,42 @@ In the final part, we will test if a combination of stratified and importance sa
 	\end{equation}
     G/GI; No assumption is taken for the distribution\\
     
-    One example is the M/M/n $(n \in \mathbb{N})$ queueing simulation(poisson distributed Arrivals and server worktime with n servers). 
-    which we will focus on.
-    
-  
+    One example is the M/M/n $(n \in \mathbb{N})$ queuing simulation(Poisson distributed Arrivals and serverwork time with n servers) which we will focus on.
+
+
+
+\subsection{System load}
+The system load in the context of a M/M/n queuing simulation refers to the 
+
+\subsection{Statistical tests}
+
+To compare both the precision and the accuracy we need to apply two different tests, the F test for equality of variances and the Welch's t-test for equality of mean. In the F test, the F-value is equal to $S_x^2$/$S_y^2$, with $S_y^2$ and $S_x^2$ being the variances of the two sample groups to compare. Under the Null-hypothesis, this F-value has a so-called F-distribution. In our experiment, the Null-Hypothesis 
+describes the case that the two sample groups have the same variance, and all differences in the variance are up to random effects.
+In this report, we want to prove that our devised sampling method converges faster than the average Monte Carlo method for estimating the Mandelbrot area with orthogonal and Latin-hypercube sampling.
+So, we want to show that the variance of our method is significantly smaller than the variance of the compared method by $\frac{S_{Monte-Carlo}^2}{S_{Strategic-sampling}^2}> F_{Critical Value}$ \parencite{Chatfield1980} 
+This means that the likelihood of those two sample groups having the same variance is smaller than $5\%$(Fischer Constant/ significance level of 5\%) with a degree of freedom of n-1 in both sample groups and a specific $F_{Critical Value}$ .
+The Welch's T-test is a version of the Students T-test in which the assumption that the two sample groups have a
+similar variance is dropped. We get the critical value that needs to be surpassed to reject the null hypothesis by
+
+\begin{equation*}
+    T_f^{-1}(\frac{p+1}{2}),
+\end{equation*}
+with
+\begin{equation*}
+    f = \frac{(\frac{S_x^2}{n}+\frac{S_y^2}{n})^2}{\frac{S_x^4}{n^2(n-1)}+\frac{S_y^4}{n^2(n-1)}}
+\end{equation*}
+and the corresponding value obtained by the two samples to be
+\begin{equation*}
+\|\frac{\overline{X}-\overline{Y}}{\sqrt{\frac{S_x^2}{n}+\frac{S_y^2}{n}}}\|.
+\end{equation*}
+
+
+\subsection{correlation coefficient}
+
 \section{Methodology}
 
-\subsection{Varying the number of iterations and sample points}
+\subsection{System load - Waiting time correlation}
 
-We can study the effect of changing the number of iterations by keeping all the other parameters in the calculation of the area constant. First, we generate 1000 random sample points, uniformly distributed in the total sampling area (${[-2,2] +[-2i,2i]}$).
-Using these sample points, we calculate the estimated area of the Mandelbrot set with the number of iterations varying from $2^1$ to $2^{15}$.
-
-For the effect of changing the number of sample points, we set the number of iterations fixed to 500 and calculate the average estimated area over 100 runs.
-We do this calculation with the number of sample points varying from $2^3$ to $2^{12}$.
-
-\subsection{Effect of stratified sampling}
-
-To see whether the stratified sampling methods, Latin hypercube sampling and orthogonal sampling reduce the variance of the estimated area compared to uniform sampling, we run 100 calculations using each sampling method.
-During these calculations, we set the number of iterations equal to 500 and we also perform these calculations using different numbers of sample points. That way we can check if the difference in the variance between the sampling methods depends on the number of sampling points.
-
-To test if the difference between the average estimated area with different sampling methods is significant, we can use Welch's t-test. For the difference in the variance, we will use an F-test to see if this difference is significant.
-
-\subsection{Strategic sampling to improve the convergence rate}
-
-We used strategic sampling of the area $\mathbb{C} \supset \{[-2,2] +[-2i,2i]\}$(see Mandelbrot set in theory part for reason) to calculate the area of the Mandelbrot set and compared the results to 
-the orthogonal/Latin hypercube sampled Monte Carlo Method in the same area.
-The basic idea was to focus more on the areas where it cannot a-priory be inferred whether the samples 
-will belong to the Mandelbrot set or not.
-For this purpose we devised a sub-spacing algorithm, taking into account the first $x_k = x_{k-1}+ 128 * (2^k)$ 
-samples, with k being the iterator for that specific cycle, and determining if a specific subspace contains only samples that are in the set or out. The samples inside each subarea were generated through Latin hypercube sampling. The area was divided into $sa_k = 16*(4^(k/2))$(with k/2 being rounded down) sub-spaces with a corresponding value for sample probability and test-iterations in the subarea. 
-In that case, future samples will be less likely taken out of that area. This is supposed to increase the
-precision of the result in the areas where there are both samples in the Mandelbrot set and outside.
-The number of samples in a subspace is set deterministic by the total number of samples required and the sample probability of that subspace.
-In each cycle, we increased the number of samples $x_k$ and in the strategic sampling version the number of subareas $sa_k$. 
-The resulting subareas will be added to the total area by their relative size. 
-\\
-We ran 100 experiments for the Monte Carlo method with orthogonal sampling, Latin hypercube sampling and the strategic sampling method, with 
-6 cycles each. Resulting in the following configurations across the 6 Cycles.
-
-
-%\begin{tabular}{t | 1 | 2 | 3 | 4 | 5 | 6}
-%\textbf{Cycle }&1&2 &3 &4&5&6\\
-%\hline
-%\textbf{Samples per cycle(L.-H./Orth.)}&256&784&1849&3844&8100&16129\\
-%\textbf{Samples per cycle(Strat.)}&256&768&1792&3840&7936&16128\\
-%\textbf{Subdivisions(L.-H./Orth.)}&1&1&1&1&1&1\\
-%\textbf{Subdivisions(Strat)}&16&64&64&256&256&1048\\
-%\end{tabular}
-The amount of samples used for the comparison(Latin hypercube/Orthogonal sampling) was slightly different for practical reasons, but chosen to be as close as possible to the samples used in strategic sampling..
-After running the 100 experiments with these parameters, we get an array of resulting area estimations.
-The statistical tests mentioned in the theory part were performed on these data points, resulting in hypothesis tests to infer whether we could reliably tell if the two methods show different or improved convergence rates in both accuracy and precision.\\
-The following sequence of graphs shows how samples are selected in each cycle.\\
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=.85\textwidth]{fractal.pdf}
-    \caption{The samples taken in Strategic sampling while progressing through cycles.}
-    \label{fig:samples_ss}
-\end{figure}
 
 
 \section{Results and discussion}
@@ -215,7 +190,7 @@ Increasing the number of sample points leads to a significant reduction in the v
 
 \begin{figure}[h]
     \centering
-   \includegraphics[width=.85\textwidth]{fractal.pdf}
+   \includegraphics[width=.85\textwidth]{graphs/fractal.pdf}
     \caption{Estimate of the area of the Mandelbrot set as a function of the number of iterations and samples.}
     \label{fig:var_i_s}
 \end{figure}
@@ -231,14 +206,14 @@ This indicates that orthogonal sampling is the better technique compared to Lati
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=.85\textwidth]{fractal.pdf}
+    \includegraphics[width=.85\textwidth]{graphs/fractal.pdf}
     \caption{Estimate of the area of the Mandelbrot set using different sampling strategies.}
     \label{fig:stratified}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-   \includegraphics[width=.85\textwidth]{fractal.pdf}
+   \includegraphics[width=.85\textwidth]{graphs/fractal.pdf}
     \caption{Left: p-values of a Welch t-test as a function of the number of sampling points. Right: F-values as a function of the number of sampling points.}
     \label{fig:stratified_stats}
 \end{figure}
@@ -253,7 +228,7 @@ To determine if the accuracy of the results is affected we compared the means in
 
 \begin{figure}[h!]
   \centering
- \includegraphics[width=.85\textwidth]{fractal.pdf}
+ \includegraphics[width=.85\textwidth]{graphs/fractal.pdf}
   \caption{Mean comparison with 1-sigma confidence intervals using Latin hypercube(right) and orthogonal sampling(left) when compared with Strategic Sampling. The dashed green Line represents the measured value for the Mandelbrot set area from \parencite{mitchell2001}}
   \label{fig:c_mean}
 \end{figure}
@@ -263,7 +238,7 @@ The Welch's T-test, shown in figure \ref{fig:welch_t}, compares the Welch's T-va
 \begin{figure}[h!]
   \centering
   %\includegraphics[scale=0.4]{welch_t_test_noTitle.png}
-  \includegraphics[width=.85\textwidth]{fractal.pdf}
+  \includegraphics[width=.85\textwidth]{graphs/fractal.pdf}
   \caption{Welch's T-test comparing the mean distributions for Strategic sampling with Latin hypercube(right) and orthogonal sampling(left) with the critical T-value(red) with significance level 0.05}
   \label{fig:welch_t}
 \end{figure}
@@ -279,7 +254,7 @@ In figure \ref{fig:log_var}, the variance of the Latin hypercube sampling method
 \begin{figure}[h!]
   %\includegraphics[scale=0.4]{l}
   \centering
- \includegraphics[width=.85\textwidth]{fractal.pdf}
+ \includegraphics[width=.85\textwidth]{graphs/fractal.pdf}
   \caption{Difference in variance in between Strategic sampling(red) and Latin hypercube(yellow)/ orthogonal sampling(blue) as shown on a logarithmic scale}
   \label{fig:log_var}
 \end{figure}
@@ -290,7 +265,7 @@ The orthogonal Sampling comparison lies close to the critical value for the most
 \begin{figure}[h!]
   \centering
   %\includegraphics[scale=0.4]{one_sided_f_test_noTitle.png}
-  \includegraphics[width=.85\textwidth]{fractal.pdf}
+  \includegraphics[width=.85\textwidth]{graphs/fractal.pdf}
   \caption{F-test comparing the variance distributions for Strategic sampling with Latin hypercube(right) and orthogonal sampling(left) with the critical F-value(red) with significance level 0.05 as shown on a logarithmic scale}
   \label{fig:f_test}
 \end{figure}

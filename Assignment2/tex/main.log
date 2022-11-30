@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.11.29)  30 NOV 2022 00:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.11.29)  30 NOV 2022 11:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1210,7 +1210,7 @@ Package biblatex Info: ... file 'main.bbl' not found.
 No file main.bbl.
 Package biblatex Info: Reference section=0 on input line 59.
 Package biblatex Info: Reference segment=0 on input line 59.
-<logo/logoUvA_en.pdf, id=58, 258.9675pt x 28.01506pt>
+<logo/logoUvA_en.pdf, id=70, 258.9675pt x 28.01506pt>
 File: logo/logoUvA_en.pdf Graphic file (type pdf)
 <use logo/logoUvA_en.pdf>
 Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 60.
@@ -1269,35 +1269,27 @@ pdfs with page group included in a single page
 LaTeX Warning: Citation 'wei1996' on page 2 undefined on input line 103.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--114
+Underfull \hbox (badness 10000) in paragraph at lines 110--114
 
  []
 
 
-Overfull \hbox (1.41205pt too wide) in paragraph at lines 115--116
-[]\OT1/cmr/m/n/10.95 https://projecteuclid.org/journals/annals-of-mathematical-
-statistics/volume-24/issue-
- []
+LaTeX Warning: Citation 'Kendall1953' on page 2 undefined on input line 116.
 
 
-Overfull \hbox (50.81168pt too wide) in paragraph at lines 115--116
-\OT1/cmr/m/n/10.95 3/Stochastic-Processes-Occurring-in-the-Theory-of-Queues-and
--their/10.1214/aoms/1177728975.full 
- []
+LaTeX Warning: Citation 'Kendall1953' on page 2 undefined on input line 120.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 115--116
+Underfull \hbox (badness 10000) in paragraph at lines 136--138
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 139--141
-
- []
+LaTeX Warning: Citation 'Chatfield1980' on page 2 undefined on input line 146.
 
 File: logo/logoUvA_en.pdf Graphic file (type pdf)
 <use logo/logoUvA_en.pdf>
-Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 152.
+Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 150.
 (pdftex.def)             Requested size: 142.26378pt x 15.3908pt.
 
 Package fancyhdr Warning: \headheight is too small (27.0pt): 
@@ -1308,14 +1300,11 @@ Package fancyhdr Warning: \headheight is too small (27.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.9908pt}.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 189--193
-
- []
-
 File: logo/logoUvA_en.pdf Graphic file (type pdf)
 <use logo/logoUvA_en.pdf>
-Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 193.
+Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 179.
 (pdftex.def)             Requested size: 142.26378pt x 15.3908pt.
+
 
 Package fancyhdr Warning: \headheight is too small (27.0pt): 
 (fancyhdr)                Make it at least 28.9908pt, for example:
@@ -1325,27 +1314,17 @@ Package fancyhdr Warning: \headheight is too small (27.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.9908pt}.
 
 [3]
-<fractal.pdf, id=895, 794.97pt x 578.16pt>
-File: fractal.pdf Graphic file (type pdf)
-<use fractal.pdf>
-Package pdftex.def Info: fractal.pdf  used on input line 196.
-(pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 197--197
-[][]  
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 205--210
+Underfull \hbox (badness 10000) in paragraph at lines 206--210
 
  []
 
-File: fractal.pdf Graphic file (type pdf)
-<use fractal.pdf>
-Package pdftex.def Info: fractal.pdf  used on input line 218.
+<graphs/fractal.pdf, id=911, 794.97pt x 578.16pt>
+File: graphs/fractal.pdf Graphic file (type pdf)
+<use graphs/fractal.pdf>
+Package pdftex.def Info: graphs/fractal.pdf  used on input line 213.
 (pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 219--219
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 214--214
 [][]  
  []
 
@@ -1353,13 +1332,13 @@ Overfull \hbox (21.90005pt too wide) in paragraph at lines 219--219
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 225--228
+Underfull \hbox (badness 10000) in paragraph at lines 222--227
 
  []
 
 File: logo/logoUvA_en.pdf Graphic file (type pdf)
 <use logo/logoUvA_en.pdf>
-Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 228.
+Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 227.
 (pdftex.def)             Requested size: 142.26378pt x 15.3908pt.
 
 Package fancyhdr Warning: \headheight is too small (27.0pt): 
@@ -1369,25 +1348,13 @@ Package fancyhdr Warning: \headheight is too small (27.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-1.9908pt}.
 
-[4 <./fractal.pdf>]
-File: fractal.pdf Graphic file (type pdf)
-<use fractal.pdf>
-Package pdftex.def Info: fractal.pdf  used on input line 234.
+[4]
+File: graphs/fractal.pdf Graphic file (type pdf)
+<use graphs/fractal.pdf>
+Package pdftex.def Info: graphs/fractal.pdf  used on input line 235.
 (pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 235--235
-[][]  
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-File: fractal.pdf Graphic file (type pdf)
-<use fractal.pdf>
-Package pdftex.def Info: fractal.pdf  used on input line 241.
-(pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 242--242
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 236--236
 [][]  
  []
 
@@ -1395,19 +1362,43 @@ Overfull \hbox (21.90005pt too wide) in paragraph at lines 242--242
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (19.05675pt too wide) in paragraph at lines 248--249
+Underfull \hbox (badness 10000) in paragraph at lines 242--245
+
+ []
+
+File: graphs/fractal.pdf Graphic file (type pdf)
+<use graphs/fractal.pdf>
+Package pdftex.def Info: graphs/fractal.pdf  used on input line 251.
+(pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
+
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 252--252
+[][]  
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: graphs/fractal.pdf Graphic file (type pdf)
+<use graphs/fractal.pdf>
+Package pdftex.def Info: graphs/fractal.pdf  used on input line 258.
+(pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
+
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 259--259
+[][]  
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Overfull \hbox (19.05675pt too wide) in paragraph at lines 265--266
 \OT1/cmr/m/n/10.95 We com-pared the re-sults of the Strate-gic sam-pling method
  against Latin hy-per-cube/orthogonal
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 252--253
-
- []
-
 File: logo/logoUvA_en.pdf Graphic file (type pdf)
 <use logo/logoUvA_en.pdf>
-Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 253.
+Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 266.
 (pdftex.def)             Requested size: 142.26378pt x 15.3908pt.
 
 Package fancyhdr Warning: \headheight is too small (27.0pt): 
@@ -1417,32 +1408,35 @@ Package fancyhdr Warning: \headheight is too small (27.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-1.9908pt}.
 
-[5]
-File: fractal.pdf Graphic file (type pdf)
-<use fractal.pdf>
-Package pdftex.def Info: fractal.pdf  used on input line 256.
+[5 <./graphs/fractal.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 269--270
+
+ []
+
+File: graphs/fractal.pdf Graphic file (type pdf)
+<use graphs/fractal.pdf>
+Package pdftex.def Info: graphs/fractal.pdf  used on input line 273.
 (pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
 
-
-LaTeX Warning: Citation 'mitchell2001' on page 6 undefined on input line 257.
-
-
-LaTeX Warning: Citation 'mitchell2001' on page 6 undefined on input line 257.
+LaTeX Warning: Citation 'mitchell2001' on page 6 undefined on input line 274.
 
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 257--257
+LaTeX Warning: Citation 'mitchell2001' on page 6 undefined on input line 274.
+
+
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 274--274
 [][]  
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-File: fractal.pdf Graphic file (type pdf)
-<use fractal.pdf>
-Package pdftex.def Info: fractal.pdf  used on input line 266.
+File: graphs/fractal.pdf Graphic file (type pdf)
+<use graphs/fractal.pdf>
+Package pdftex.def Info: graphs/fractal.pdf  used on input line 283.
 (pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 267--267
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 284--284
 [][]  
  []
 
@@ -1450,22 +1444,13 @@ Overfull \hbox (21.90005pt too wide) in paragraph at lines 267--267
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 276--278
+Underfull \hbox (badness 10000) in paragraph at lines 293--295
 
- []
-
-File: fractal.pdf Graphic file (type pdf)
-<use fractal.pdf>
-Package pdftex.def Info: fractal.pdf  used on input line 282.
-(pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 283--283
-[][]  
  []
 
 File: logo/logoUvA_en.pdf Graphic file (type pdf)
 <use logo/logoUvA_en.pdf>
-Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 285.
+Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 295.
 (pdftex.def)             Requested size: 142.26378pt x 15.3908pt.
 
 Package fancyhdr Warning: \headheight is too small (27.0pt): 
@@ -1476,12 +1461,38 @@ Package fancyhdr Warning: \headheight is too small (27.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.9908pt}.
 
 [6]
+File: graphs/fractal.pdf Graphic file (type pdf)
+<use graphs/fractal.pdf>
+Package pdftex.def Info: graphs/fractal.pdf  used on input line 299.
+(pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
 
-LaTeX Warning: Text page 7 contains only floats.
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 300--300
+[][]  
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 304--306
+
+ []
+
+File: graphs/fractal.pdf Graphic file (type pdf)
+<use graphs/fractal.pdf>
+Package pdftex.def Info: graphs/fractal.pdf  used on input line 310.
+(pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
+
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 311--311
+[][]  
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 File: logo/logoUvA_en.pdf Graphic file (type pdf)
 <use logo/logoUvA_en.pdf>
-Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 285.
+Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 318.
 (pdftex.def)             Requested size: 142.26378pt x 15.3908pt.
 
 Package fancyhdr Warning: \headheight is too small (27.0pt): 
@@ -1492,13 +1503,12 @@ Package fancyhdr Warning: \headheight is too small (27.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.9908pt}.
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 287--289
 
- []
+LaTeX Warning: Text page 8 contains only floats.
 
 File: logo/logoUvA_en.pdf Graphic file (type pdf)
 <use logo/logoUvA_en.pdf>
-Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 289.
+Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 318.
 (pdftex.def)             Requested size: 142.26378pt x 15.3908pt.
 
 Package fancyhdr Warning: \headheight is too small (27.0pt): 
@@ -1509,19 +1519,11 @@ Package fancyhdr Warning: \headheight is too small (27.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.9908pt}.
 
 [8]
-File: fractal.pdf Graphic file (type pdf)
-<use fractal.pdf>
-Package pdftex.def Info: fractal.pdf  used on input line 293.
-(pdftex.def)             Requested size: 362.77525pt x 263.83954pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 294--294
-[][]  
- []
-
 File: logo/logoUvA_en.pdf Graphic file (type pdf)
 <use logo/logoUvA_en.pdf>
-Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 301.
+Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 325.
 (pdftex.def)             Requested size: 142.26378pt x 15.3908pt.
+
 
 Package fancyhdr Warning: \headheight is too small (27.0pt): 
 (fancyhdr)                Make it at least 28.9908pt, for example:
@@ -1533,7 +1535,7 @@ Package fancyhdr Warning: \headheight is too small (27.0pt):
 [9]
 File: logo/logoUvA_en.pdf Graphic file (type pdf)
 <use logo/logoUvA_en.pdf>
-Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 312.
+Package pdftex.def Info: logo/logoUvA_en.pdf  used on input line 329.
 (pdftex.def)             Requested size: 142.26378pt x 15.3908pt.
 
 
@@ -1546,7 +1548,7 @@ Package fancyhdr Warning: \headheight is too small (27.0pt):
 
 [10]
 
-LaTeX Warning: Empty bibliography on input line 313.
+LaTeX Warning: Empty bibliography on input line 330.
 
 
 AED: lastpage setting LastPage
@@ -1559,7 +1561,7 @@ LaTeX Font Warning: Size substitutions with differences
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: BFF26FDE92284896A53B0BFDF944670B;2482.
+(rerunfilecheck)             Checksum: 4F92FD882726911C47C1F7056F6A233B;2925.
 
 Package biblatex Warning: Please (re)run Biber on the file:
 (biblatex)                main
@@ -1570,10 +1572,10 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33653 strings out of 475385
- 656839 string characters out of 2776906
- 1522902 words of memory out of 3000000
- 54481 multiletter control sequences out of 15000+600000
+ 33660 strings out of 475385
+ 656978 string characters out of 2776906
+ 1525999 words of memory out of 3000000
+ 54484 multiletter control sequences out of 15000+600000
  478922 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,20n,105p,679b,1731s stack positions out of 10000i,1000n,20000p,200000b,80000s
@@ -1581,21 +1583,26 @@ Here is how much of TeX's memory you used:
 cmbx10.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmbx12.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/amsfonts/cm/cmcsc10.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fon
-ts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/alexk/AppData/Local/Programs/M
-iKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/alexk/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/alexk/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/alexk/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users
-/alexk/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C
-:/Users/alexk/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsl
-10.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fonts/type1/publi
-c/amsfonts/cm/cmsy8.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fonts/typ
-e1/public/amsfonts/cm/cmti10.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/
-fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (10 pages, 4847265 bytes).
+ts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/alexk/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/alexk/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/alexk/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/alexk
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Use
+rs/alexk/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb
+><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
+mr6.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
+ts/cm/cmr8.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fonts/type1/public
+/amsfonts/cm/cmr9.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmsl10.pfb><C:/Users/alexk/AppData/Local/Programs/MiKTeX/fo
+nts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/alexk/AppData/Local/Programs/
+MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/alexk/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/alexk/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/alex
+k/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+
+Output written on main.pdf (10 pages, 4896491 bytes).
 PDF statistics:
- 3106 PDF objects out of 3580 (max. 8388607)
- 36 named destinations out of 1000 (max. 500000)
- 8737 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 3141 PDF objects out of 3580 (max. 8388607)
+ 39 named destinations out of 1000 (max. 500000)
+ 8761 words of extra memory for PDF output out of 10000 (max. 10000000)
 
