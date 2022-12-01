@@ -82,7 +82,7 @@ class server_system:
 
         if self.arrival_process != 'markovian' and self.arrival_process != 'deterministic':
             raise NameError('Unexpected arrival process, "%s", expected "markovian" or "deterministic".' % arrival_process)
-        if self.service_process != 'markovian' and self.service_process != 'deterministic' and self.service_time != 'hyperexponential':
+        if self.service_process != 'markovian' and self.service_process != 'deterministic' and self.service_process != 'hyperexponential':
             raise NameError('Unexpected service time distribution, "%s", expected "markovian", "deterministic" or "hyperexponential".' % service_process)
 
         # Create the queuing model of the server system
