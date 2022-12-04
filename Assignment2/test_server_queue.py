@@ -88,6 +88,29 @@ class test_server_queue(unittest.TestCase):
         self.assertEqual(priority, -.5)
         self.assertEqual(self.system.service_times, [1, 2, 2, 5, 8])
         self.assertEqual(self.system.priority_list, [-1, -.5, 0, .5, 1])
+    
+    def test_reset(self):
+
+        self.system.set_queue_model('priority')
+        self.system.arrival_process = 'deterministic'
+        self.system.service_process = 'hyperexponential'
+
+        self.assertEqual(self.system.ran, False)
+        self.system.run()
+        self.assertEqual(self.system.ran, True)
+        self.system.reset()
+        self.assertEqual(self.system.ran, False)
+
+        # check if the system is correctly reset
+        self.assertEqual(self.system.n_jobs, self.n_jobs)
+        self.assertEqual(self.system.n_servers, self.n_servers)
+        self.assertEqual(self.system.arrival_rate, self.arrival_rate)
+        self.assertEqual(self.system.service_time, self.service_time)
+
+        self.assertEqual(self.system.arrival_process, 'deterministic')
+        self.assertEqual(self.system.service_process, 'hyperexponential')
+        self.assertEqual(self.system.queue_model, 'priority')
+        self.assertEqual(type(self.system.servers), simpy.resources.resource.PriorityResource)
 
 
 if __name__ == '__main__':

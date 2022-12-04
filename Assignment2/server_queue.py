@@ -97,6 +97,10 @@ class server_system:
         self.waiting_times = []
         self.service_times = []
         self.priority_list = []
+        self.simulation_time = []
+
+        # Variable to check if the simulation has already ran (important for reset)
+        self.ran = False
 
     def set_n_servers(self, n):
         """
@@ -136,7 +140,7 @@ class server_system:
         """Generates jobs to be processed by the system."""
         for i in range(self.n_jobs):
             # Create job
-            job = self.job_creator(i)
+            job = self.job_creator()
             self.env.process(job)
 
             # Determine the arrival of the next job
@@ -147,18 +151,10 @@ class server_system:
 
             yield self.env.timeout(t)
 
-    def job_creator(self, number):
-        """
-        Creates jobs to be processed by the system.
-
-        Parameters
-        ----------
-        number : int
-            jobnumber
-        """
+    def job_creator(self):
+        """Creates jobs to be processed by the system."""
         # Arrival time
         t_arrival = self.env.now
-        #print('Job %s: arrived at %s' % (number, t_arrival))
 
         # Determine the service time
         if self.service_process == 'markovian':
@@ -172,8 +168,6 @@ class server_system:
                 t_service = random.expovariate(1 / self.service_time)
             else:
                 t_service = random.expovariate(1 / (5 * self.service_time))
-
-        #print(t_service)
 
         if self.queue_model == 'priority':
             place = self.determine_priority(t_service)
@@ -191,13 +185,11 @@ class server_system:
 
         # Determine the waiting time
         self.waiting_times.append(self.env.now - t_arrival)
-        #print('Job %s: waited for %s' % (number, self.waiting_times[-1]))
-        #print('Job %s: started at %s' % (number, self.env.now))
+        self.simulation_time.append(self.env.now)
 
         # Execute the job
         yield self.env.timeout(t_service)
         self.servers.release(request)
-        #print('Job %s: finished at %s' % (number, self.env.now))
 
     def determine_priority(self, t_service):
         """
@@ -237,10 +229,17 @@ class server_system:
         self.priority_list.insert(place, priority)
 
         return priority
+    
+    def reset(self):
+        """Resets the system after a run."""
+        self.__init__(self.n_jobs, self.n_servers, self.arrival_rate, self.service_time, self.arrival_process, self.service_process, self.queue_model)
 
     def run(self):
         """Runs a simulation of the system."""
-        # Empty list with the waiting times (if there was a previous run)
-        self.waiting_times = []
+        # Reset the system if there was a previous run
+        if self.ran == True:
+            self.reset()
+
         self.env.process(self.job_generator())
         self.env.run()
+        self.ran = True
