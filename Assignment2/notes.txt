@@ -1,0 +1,15 @@
+notes
+
+
+Models used
+comparisson of rho
+MM1
+MMn
+MH1
+
+
+
+MD1
+MDn
+MH1
+MHn
