@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 class configuration():
 
-    def __init__(self, n = None, scheme = 'log'):
+    def __init__(self, n = None, scheme = 'logarithmic', method = 'brownian'):
         
         if n:
             self.n_samples = n
@@ -15,7 +15,16 @@ class configuration():
             self.coordinates = None
             self.energy = None
 
+        if scheme != 'logarithmic' and scheme != 'hyperbolic_fast' and scheme != 'hyperbolic_slow':
+            raise NameError("Unkown cooling scheme (%s) given, expected 'logarithmic', 'hyperbolic_fast' or 'hyperbolic_slow'." % scheme)
         self.cooling_scheme = scheme
+
+        if method != 'brownian' and method != 'force' and method != 'force_brownian':
+            raise NameError("Unkown method (%s) given, expected 'brownian', 'force' or 'force_brownian'." % method)
+        self.updating_method = method
+
+        self.path = []
+        self.energy_list = []
 
     def generate_samples(self, n = None):
 
@@ -59,20 +68,30 @@ class configuration():
             
         return net_force / np.linalg.norm(net_force)
     
-    def calc_temperature(self, iteration, scheme = None):
+    def calc_temperature(self, iteration):
 
-        return 0.5 / np.log(10 + iteration)
+        if self.cooling_scheme == 'logarithmic':
+            return 0.8 / (np.log(iteration + 2))
+        elif self.cooling_scheme == 'hyperbolic_fast':
+            return 1/(0.1*iteration + 2)
+        else:
+            return 3/(0.008*iteration + 2)
     
     def move_coord(self, iteration, index):
+
+        dx = 0
+        dy = 0
+
         
-        net_force = self.calc_force(index)
-        dx = net_force[0] * 0.1
-        dy = net_force[1] * 0.1
-
-        range = 1/(0.02*iteration + 4)
-
-        #dx = np.random.uniform(low = -range, high = range)
-        #dy = np.random.uniform(low = -range, high = range)
+        if self.updating_method != 'brownian':
+            net_force = self.calc_force(index)
+            dx = net_force[0] * 0.2
+            dy = net_force[1] * 0.2
+        
+        if self.updating_method != 'force':
+            range = 2/(0.01*iteration + 5)
+            dx += np.random.uniform(low = -range, high = range)
+            dy += np.random.uniform(low = -range, high = range)
 
         return dx, dy
 
@@ -120,17 +139,11 @@ class configuration():
         plt.show()
 
     def optimize(self, iterations = 5000):
-        path = [np.copy(self.coordinates)]
+
+        self.path.append(np.copy(self.coordinates))
+        self.energy_list.append(self.energy)
         for i in range(iterations):
             T = self.calc_temperature(i)
             self.update_coord(T, i)
-            path.append(self.coordinates)
-            
-            #if (i+1) % 4000 == 0 or (i+1) // 4000 != 0:
-            #    self.plot()
-            
-        return path
-
-#np.random.seed(0)
-#circle = configuration(11)
-#circle.optimize(5000)
+            self.path.append(self.coordinates)
+            self.energy_list.append(self.energy)
