@@ -284,3 +284,29 @@ class configuration():
             # Save the coordinates and energy
             self.path.append(self.coordinates)
             self.energy_list.append(self.energy)
+
+def generate_optimal_circle(n, r = 1):
+    """
+    Calculate n equidistant points on a circle.
+
+    Parameters
+    ----------
+    n : int
+        number of points
+    r : float, optional
+        radius of the circle (default is 1)
+    
+    Returns
+    -------
+    coordinates : numpy.ndarray
+        array with the coordinates of the points (n x 2)
+    """
+    # Calculate the distance
+    avg_dist = (2 * np.pi) / n
+    angles = np.arange(n) * avg_dist
+
+    coordinates = np.zeros((2, n))
+    coordinates[0] = r * np.cos(angles)
+    coordinates[1] = r * np.sin(angles)
+
+    return coordinates.T
