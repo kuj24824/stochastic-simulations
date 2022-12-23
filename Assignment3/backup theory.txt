@@ -1,0 +1,205 @@
+%-------------------------------------------------------------------------------
+% LATEX TEMPLATE ARTIKEL
+%-------------------------------------------------------------------------------
+% Dit template is voor gebruik door studenten van de de bacheloropleiding 
+% Informatica van de Universiteit van Amsterdam.
+% Voor informatie over schrijfvaardigheden, zie 
+%                               https://practicumav.nl/schrijven/index.html
+%
+%-------------------------------------------------------------------------------
+%	PACKAGES EN DOCUMENT CONFIGURATIE
+%-------------------------------------------------------------------------------
+
+\documentclass{uva-inf-article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+\usepackage[style=authoryear-comp]{biblatex}
+\addbibresource{references.bib}
+
+%-------------------------------------------------------------------------------
+%	GEGEVENS VOOR IN DE TITEL, HEADER EN FOOTER
+%-------------------------------------------------------------------------------
+
+% Geef je artikel een logische titel die de inhoud dekt.
+\title{Assignment 3: Analyzing the simulated annealing approach to modeling charged particles in a circle.}
+
+% Vul de naam van de opdracht in zoals gegeven door de docent en het type 
+% opdracht, bijvoorbeeld 'technisch rapport' of 'essay'.
+%\assignment{Naam van de opdracht}
+%\assignmenttype{Type opdracht}
+
+% Vul de volledige namen van alle auteurs in en de corresponderende UvAnetID's.
+\authors{Alexander Künnen\\alexander.kunnen@student.uva.nl; Aaron De Clercq\\aaron.de.clercq@student.uva.nl}
+\uvanetids{UvAnetID 14101955; UvAnetID 14483610}
+
+% Vul de naam van je tutor, begeleider (mentor), of docent / vakcoördinator in.
+% Vermeld in ieder geval de naam van diegene die het artikel nakijkt!
+\tutor{}
+\mentor{}
+\docent{Gábor Závodszky}
+
+% Vul hier de naam van je tutorgroep, werkgroep, of practicumgroep in.
+%\group{Naam van de groep}
+
+% Vul de naam van de cursus in en de cursuscode, te vinden op o.a. DataNose.
+\course{Stochastic simulation}
+\courseid{}
+
+% Dit is de datum die op het document komt te staan. Standaard is dat vandaag.
+\date{\today}
+
+%-------------------------------------------------------------------------------
+%	VOORPAGINA 
+%-------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+
+\justifying
+
+%-------------------------------------------------------------------------------
+%	INHOUDSOPGAVE EN ABSTRACT
+%-------------------------------------------------------------------------------
+
+
+%TC:ignore
+%\tableofcontents
+%\begin{abstract}
+%\end{abstract}
+%TC:endignore
+
+%-------------------------------------------------------------------------------
+%	INHOUD
+%-------------------------------------------------------------------------------
+% Hanteer bij benadering IMRAD: Introduction, Method, Results, Discussion.
+
+\section*{Abstract}
+
+
+\section{Introduction}
+
+In many scenarios, finding the parameters that optimize a certain objective function can be important to gain efficiency, save time or money. 
+Examples of these optimization problems range from finding the shortest route for a package delivery service \parencite{Johnson1990} to finding the geometry of a molecule that minimizes the energy \parencite{Schlegel2011}.
+Solving an optimization problem is not always straightforward, especially if the objective function depends on many parameters.
+For instance, in an energy minimization with many degrees of freedom, the potential energy surface is likely to be complicated and have several local minima \parencite{Schlegel2003}.
+Since going through all possible configurations is generally infeasible, one approach to solving such a problem is using quasi-Newton methods, which use information about the gradient of the potential energy surface to find the minimum \parencite{Broyden2014, Schlegel2003}.
+However, in the presence of local minima, quasi-Newton methods tend to get stuck in a local minimum and thus never reach the global minimum.
+
+An alternative approach is simulated annealing \parencite{Kirkpatrick1983}. This method is inspired by the process of creating near-perfect crystals by letting the material cool down very slowly. The idea is that we start at a high temperature where all possible configurations are likely to be sampled and by slowly decreasing the temperature states with high energy will have a lower probability until only the state with the lowest energy has a finite probability. One of the important aspects of this method is coming up with a good cooling schedule. Because we want a cooling schedule that starts at a temperature where every state is likely to be sampled and ends with a temperature close to zero the schedule is problem-dependent.
+
+To explore the importance of the cooling schedule to find the global minimum, we will look at the optimization problem of finding the minimal energy configuration of repelling charge particles within a circle. When there are few particles, it is obvious that the optimal configuration will be the one with all the particles on the edge of the circle. Increasing the number of particles in the system will result in a potential energy surface that is more complicated, with minima where one or more particles are not located on the edge. Using the simulated annealing method with different cooling schedules, we will try to find the global minimal configuration for a various number of particles. Additionally, we will experiment with different ways of updating the coordinates of the particles to speed up the convergence.
+
+
+\section{Theory}
+
+To properly analyze the aforementioned simulated annealing method we will provide some basic definitions. Furthermore, it is necessary to provide a contextual theoretical background to the simulated experiments we are going to perform on charged particles.\\
+
+\subsection{charged particles within a circle}\label{sec:chargedparts}
+Charged particles repel each other. The force by which they repel each other is proportional to $1/\|(x_i-x_j)\|$ with $x_i,x_j$ the location vector of two of these particles. But if they are confined within a circular area, they can only move as far as the edge of the circle. It is not trivial to see the minimal Energy configuration for a number of particles in a circle since the particles can be on the edge of said circle but also inside resulting in the minimization of the sum of n functions with n-1 2-dimensional variables. This is because the total energy is proportional to the sum of the repelling energy of each two particles.
+
+\begin{equation}
+\sum_{i=0}^{n}{\sum_{j=0; j\neq i}^{n}{\frac{1}{\|(x_i-x_j)\|}}}
+\end{equation}
+
+ To simulate a number of charged particles in this environment and to find a stable Minimal Energy configuration for the location of these particles, we run annealing simulations.\\
+
+
+\subsection{Hasting Metropolis sampling}\label{sec:hastmetr}
+The Hasting Metropolis\parencite{Hastings1970} sampling method uses an approach inspired by Markov chains to only accept new samples(states of the chain) with a specific probability. Starting with a random sample in the sampling area, another point is evaluated with a predetermined function and compared with the last sample. If the new point has a more optimal score the new point becomes a new sample. Otherwise the new point is only accepted with a probability  $e^{\alpha(h(x_{+1}-h(x_i)))}$ with $h(x_i)$ the score of the function that is supposed to be minimized evaluated for the sample point and scaling factor $\alpha$.
+\\
+
+\subsection{Brownian motion}\label{sec:brwnmot}
+One possibility to select a new reference point in \ref{sec:hastmetr} is by adding a noise function to the initial sample point. This is meant to resemble so called Brownian motion\parencite{Tsekov1995} in the charged particles. This is observed random movement and particle interaction in otherwise stationary material.\\
+
+
+\subsection{Cooling schemes}\label{sec:hyperbol}
+A cooling schema reduces a temperature coefficient over time annealing to a minimal temperature. This scheme can be artificially altered, therefore different approaches of cooling schemes can be assumed. Depending on the Problem at hand different cooling schemes may lead to differing results. These schemes depend on the underlying function to temperature reduction and on their starting temperature. A slower cooling scheme may find more local optima in total, therefore it is more likely to find the global optima as well. But it is also more likely to leave that global optima area for that reason. A fast cooling scheme might converge too fast without finding all necessary solution configurations.
+In our experiment we expect for the cases of many charged particles to require a higher starting temperature to assume more possible starting locations. For fewer charged particles this might not be necessary. 
+
+
+\subsection{Simulated annealing }\label{sec:simann}
+Simulated Annealing is used most often in cases where local optima occur frequently. The goal is to find global optima over local optima in a complex optimization problem. To find these optima, the process has to be precise enough to converge while also jumping over barriers between local and global optima. The idea is to reproduce the effect of annealing in crystals in nature. A slow but steady reduction in temperature results in formation of molecular crystalline structures, and therefore energy minimal states, in the observed materials \parencite{Kirkpatrick1983}. This is reproduced for example by setting a corresponding annealing temperature for a sampling process like the one described in \ref{sec:hastmetr} reducing the probability of accepting new states with lower scores by $e^{\frac{h(x_i)-h(x_{i+1})}{T}}$ (compare \ref{sec:hastmetr}) depending on temperature T. Furthermore the magnitude of the Brownian motion used in selecting the new point for comparison is also reduced over time depending on the cooling schedule \ref{sec:hyperbol}. That way it becomes less likely for random jumps to be accepted as time moves while convergence still happens for the global optimum.\\
+
+\subsection{Case Study: circumference charges vs one-center charge}\label{sec:cntrvscirc}
+As described in \ref{sec:chargedparts} the minimal energy configuration cannot usually be assumed to be trivial for higher amounts of charged particles. Later however we will show two distinct patterns emerge for up two 15 particles. We found the pattern\label{pat1} of n equidistant distributed particles on the circumference of the circle as well as the pattern\label{pat2} of n-1 equidistant distributed particles on the circumference with one particle in the center. To find the minimum energy configuration for these specific patterns only one comparison is sufficient resulting in the following values for total system energy state.\\
+
+
+\begin{figure}[h]
+    \centering
+   \includegraphics[width=0.4\textwidth5]{graphs/pattern_comparison.pdf}
+   \includegraphics[width=0.4\textwidth]{graphs/pattern_difference2.pdf}
+    \caption{1.)Comparison between total system energy states in Pattern 1\ref{pat1} and  Pattern 2\ref{pat2} on the left and 2.)difference in total system energy states on the right. Also noteworthy is the small relative difference between the local system energy states optima.}
+    \label{fig:paterncomp}
+\end{figure}
+
+We find the optimal case to be \ref{pat1} for cases 2-11 and \ref{pat2} for 12-15. One more important point to note here is that for 11 particles these local and global minima are closer to each other than for any other amount of particles, which suggests that it will be the most difficult for this configuration to find a global minimum.
+
+\section{Methodology}
+
+To find the minimal energy configuration using simulated annealing, we need to start with an initial random configuration. 
+This configuration can be constructed by generating 2 uniform random variables between -1 and 1 for every particle to represent its x- and y-coordinate.
+If the generated point lies outside the unit circle, we project it back onto the circle.
+
+\begin{align}
+    \theta &= tan^{-1}(\frac{y}{x})\\
+    x &= cos(\theta)\\
+    y &= sin(\theta)
+\end{align}
+
+In the iterative optimization scheme, there are two important steps that determine the quality and efficiency of the process. The first one is the cooling scheme. 
+
+\subsection{2 competing local minima}
+
+
+To further analyse the minimal configuration for the cases of 3 to 15 particles we assume the minimal energy configuration to occur on either of the following two patterns.
+
+1.The charges are distributed equidistant on the circumference of the circular area that is analyzed 
+
+2.One charge is in the center of the circle and the other charges are equidistantly distributed on the circumference.
+
+After generating the appropriate amount of particles in these idealized configurations we measured 
+
+
+\section{Results and discussion}
+
+\subsection{Minimal energy configurations}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{graphs/minimal_energy_config.pdf}
+    \caption{Minimal energy configuration for 5, 11, 12, 16, 17 and 21 charge particles in a unit circle.}
+    \label{fig:config}
+\end{figure}
+
+\section{Conclusions}
+
+
+
+%-------------------------------------------------------------------------------
+%	REFERENTIES
+%-------------------------------------------------------------------------------
+\clearpage
+\printbibliography
+
+%-------------------------------------------------------------------------------
+%	BIJLAGEN 
+%-------------------------------------------------------------------------------
+
+%TC:ignore
+
+%\section{Bijlage {\LaTeX} code}
+%Bijgevoegd zijn de \textattachfile{main.tex}{code} en 
+%\textattachfile{references.bib}{bibliografie}.
+%TC:endignore
+
+%-------------------------------------------------------------------------------
+\end{document}
+
+
+
